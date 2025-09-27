@@ -1,20 +1,24 @@
 import styles from "./index.module.css";
 import sqlLogo from "./assets/sql-logo.png";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+
+interface GenerateResponse {
+  response: string;
+}
 
 function App() {
-  const [queryDescription, setQueryDescription] = useState("");
-  const [sqlQuery, setSqlQuery] = useState("");
+  const [queryDescription, setQueryDescription] = useState<string>("");
+  const [sqlQuery, setSqlQuery] = useState<string>("");
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const generatedQuery = await generateQuery();
     setSqlQuery(generatedQuery);
   };
 
-  const generateQuery = async () => {
+  const generateQuery = async (): Promise<string> => {
     const response = await fetch("http://localhost:3005/generate", {
       method: "POST",
       headers: {
@@ -23,7 +27,7 @@ function App() {
       body: JSON.stringify({ queryDescription: queryDescription }),
     });
 
-    const data = await response.json();
+    const data: GenerateResponse = await response.json();
     return data.response.trim();
   };
 

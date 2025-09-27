@@ -1,6 +1,6 @@
 import openaiClient from "./api.js";
 
-const generate = async (queryDescription) => {
+const generate = async (queryDescription: string): Promise<string> => {
   const response = await openaiClient.responses.create({
     model: "gpt-5-nano",
     input: `Convert the following natural language description into an SQL query: \n\n${queryDescription}`,
