@@ -1,8 +1,30 @@
+import styles from "./index.module.css";
+import sqlLogo from "./assets/sql-logo.png";
+
+import { useState } from "react";
+
 function App() {
+  const [queryDescription, setQueryDescription] = useState("");
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("form submitted: ", queryDescription);
+  };
+
   return (
-    <>
-      <div>Hello</div>
-    </>
+    <main className={styles.main}>
+      <img src={sqlLogo} alt="" className={styles.icon} />
+      <h3>Generate SQL with AI</h3>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={(e) => setQueryDescription(e.target.value)}
+          type="text"
+          name="query-description"
+          placeholder="Describe your query"
+        />
+        <input type="submit" value="Generate query" />
+      </form>
+    </main>
   );
 }
 
